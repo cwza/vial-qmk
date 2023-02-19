@@ -1,0 +1,11 @@
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+VIAL_INSECURE = yes
+QMK_SETTINGS = yes
+
+# CONSOLE_ENABLE = yes
+
+# POINTING_DEVICE_ENABLE = yes
+# POINTING_DEVICE_DRIVER = analog_joystick
+
+EXTRAFLAGS += -flto
