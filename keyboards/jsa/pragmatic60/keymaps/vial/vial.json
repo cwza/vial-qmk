@@ -1,7 +1,4 @@
 {
-    "name": "Pragmatic 72",
-    "vendorId": "0xFEED",
-    "productId": "0x0F02",
     "lighting": "none",
     "matrix": {
         "rows": 5,
