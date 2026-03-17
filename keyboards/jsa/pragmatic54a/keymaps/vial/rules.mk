@@ -4,3 +4,9 @@ QMK_SETTINGS = yes
 VIAL_INSECURE = yes
 
 EXTRAFLAGS += -flto
+
+# squeeze size
+LTO_ENABLE = yes
+TAP_DANCE_ENABLE = no
+COMBO_ENABLE = no
+KEY_OVERRIDE_ENABLE = no
