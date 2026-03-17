@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "sm_td.h"
 
 // Defines names for use in layer keycodes and the keymap
 // enum layer_names {
@@ -51,66 +52,13 @@
 // window management utility
 #define DIVVY   KC_F13
 
-// const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//     /* Base */
-//      [0] = LAYOUT(
-//         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//          KC_ESC,   KC_Q,    KC_W,    KC_F,    KC_P,   KC_B,         KC_J,    KC_L,    KC_U,       KC_Y,    KC_SCLN,    _______,
-//          KC_TAB,   KC_A,    KC_R,    KC_S,    KC_T,   KC_G,         KC_M,    KC_N,    KC_E,       KC_I,    KC_O,       _______,
-//         _______,_A(KC_Z),_C(KC_X),_S(KC_C),_G(KC_D),  KC_V,         KC_K, _G(KC_H),_S(KC_COMM),_C(KC_DOT),_A(KC_SLSH), _______,
-//         _______, _______, LT(3,KC_CAPS), LT(1,KC_BSPC),         LT(2,KC_SPC), LT(4,KC_ENT), _______, _______
-//     ),
-//     [1] = LAYOUT(
-//         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//         _______, KC_ESC,  SCNSHOT, DIVVY,   SPOTLT,  _______, KC_PPLS, KC_P7,   KC_P8,   KC_P9,   KC_PERC, _______,
-//         _______, KC_TAB,  CUT,     COPY,    PSTE,    KC_ENT,  KC_MINS, KC_P4,   KC_P5,   KC_P6,   KC_PAST, _______,
-//         _______, _______, WKSPLF,  MSNCTL,  WKSPRT,  KC_SPC,  KC_DLR,  KC_P1,   KC_P2,   KC_P3,   KC_PSLS, _______,
-//                           _______, _______, _______, XXXXXXX, KC_P0,   KC_PDOT, _______, _______
-//     ),
-//     [2] = LAYOUT(
-//         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//         _______, KC_CIRC, KC_GRV,  KC_TILD, KC_LCBR, KC_RCBR, KC_TAB,  KC_PGUP, KC_UP,   _______, _______, _______,
-//         _______, KC_EXLM, KC_AT,   KC_HASH, KC_LPRN, KC_RPRN, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  KC_END, _______,
-//         _______, KC_BSLS, KC_AMPR, KC_PIPE, KC_LBRC, KC_RBRC, KC_CAPS, KC_PGDN, _______, _______, _______, _______,
-//                           _______, _______,_______, KC_DEL,  XXXXXXX, _______, _______, _______
-//     ),
-//     [3] = LAYOUT(
-//         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//         _______, _______, _______, _______, _______, _______, KC_PPLS, _______, _______, _______, _______, _______,
-//         _______, _______, _______, REDO,    UNDO,    _______, KC_MINS, KC_PEQL, KC_DQUO, KC_QUOT, _______, _______,
-//         _______, _______, _______, _______, _______, _______, _______, _______, KC_LABK, KC_RABK, _______, _______,
-//                           _______, _______, XXXXXXX, _______, KC_UNDS, _______, _______, _______
-//     ),
-//     [4] = LAYOUT(
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//        _______, QK_RBT,  _______, _______, _______, _______, _______, KC_BRIU, KC_VOLU, ZOOMIN,  _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, KC_BRID, KC_VOLD, ZOOMOUT, _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, ACTUAL,  _______, _______,
-//                          _______, _______, _______, _______, _______, XXXXXXX, _______, _______
-//     ),
-//     [5] = LAYOUT(
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//        _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
-//                          _______, _______, _______, _______, _______, _______, _______, _______
-//     ),
-//     [6] = LAYOUT(
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//        _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
-//                          _______, _______, _______, _______, _______, _______, _______, _______
-//     )
-// };
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_TRNS,
-		KC_TRNS, LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), KC_G, KC_H, RSFT_T(KC_J), RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_TRNS,
+		KC_TRNS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_TRNS,
 		KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS,
-		_______, LT(5, KC_ESC), LT(1, KC_SPC), LT(2, KC_TAB), LT(4, KC_ENT), LT(3, KC_BSPC), LT(6, KC_F13), _______
+		_______, KC_ESC, KC_SPC, KC_TAB, KC_ENT, KC_BSPC, KC_F13, _______
 	),
 	[1] = LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -167,6 +115,9 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_smtd(keycode, record)) {
+        return false;
+    }
     switch (keycode){
         case  KC_F17:
             if (record->event.pressed) {
@@ -175,4 +126,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;   // override F17, otherwise caps word will be stopped.
     }
     return true;
+}
+
+smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
+    switch (keycode) {
+        SMTD_MT(KC_A, KC_LEFT_CTRL)
+        SMTD_MT(KC_S, KC_LEFT_ALT)
+        SMTD_MT(KC_D, KC_LEFT_GUI)
+        SMTD_MT(KC_F, KC_LEFT_SHIFT)
+        SMTD_MT(KC_SCLN, KC_LEFT_CTRL)
+        SMTD_MT(KC_L, KC_LEFT_ALT)
+        SMTD_MT(KC_K, KC_LEFT_GUI)
+        SMTD_MT(KC_J, KC_LEFT_SHIFT)
+        SMTD_LT(KC_SPC, 1)
+        SMTD_LT(KC_TAB, 2)
+        SMTD_LT(KC_BSPC, 3)
+        SMTD_LT(KC_ENT, 4)
+        SMTD_LT(KC_ESC, 5)
+        SMTD_LT(KC_F13, 6)
+    }
+    return SMTD_RESOLUTION_UNHANDLED;
 }
