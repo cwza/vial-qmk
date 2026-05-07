@@ -57,13 +57,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
 		KC_ESC, LCTL_T(KC_A), LALT_T(KC_S), LSFT_T(KC_D), LGUI_T(KC_F), KC_G, KC_H, RGUI_T(KC_J), RSFT_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
 		KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS,
-		_______, MO(4), LT(1, KC_SPC), LT(3, KC_F13), KC_ENT, LT(2, KC_BSPC), KC_TRNS, _______
+		_______, MO(4), LT(1, KC_SPC), LT(3, KC_F13), KC_ENT, LT(2, KC_BSPC), KC_CAPS, _______
 	),
 	[1] = LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, LGUI(LSFT(KC_LBRC)), LGUI(LSFT(KC_RBRC)), LGUI(KC_LBRC), LGUI(KC_RBRC), LGUI(KC_EQL), KC_PGUP, KC_HOME, KC_UP, KC_END, KC_TRNS, KC_TRNS,
 		KC_TRNS, OSM(MOD_LCTL), OSM(MOD_LALT), OSM(MOD_LSFT), OSM(MOD_LGUI), LGUI(KC_MINS), KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_F17, KC_TRNS,
-		KC_TRNS, LGUI(KC_Z), LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI(LSFT(KC_Z)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_CAPS, KC_TRNS,
+		KC_TRNS, LGUI(KC_Z), LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI(LSFT(KC_Z)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, _______
 	),
 	[2] = LAYOUT(
@@ -75,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 	[3] = LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_F7, KC_F8, KC_F9, KC_F12, KC_TRNS, KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS,
-		KC_TRNS, LCTL_T(KC_NO), LALT_T(KC_F4), LSFT_T(KC_F5), LGUI_T(KC_F6), KC_F11, KC_TRNS, RGUI_T(KC_4), RSFT_T(KC_5), RALT_T(KC_6), RCTL_T(KC_TRNS), KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F10, KC_TRNS, KC_1, KC_2, KC_3, KC_TRNS, KC_TRNS,
-		_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_0, KC_TRNS, _______
+		KC_TRNS, KC_TRNS, KC_F7, KC_F8, KC_F9, KC_F12, KC_PAST, KC_7, KC_8, KC_9, KC_PEQL, KC_TRNS,
+		KC_TRNS, LCTL_T(KC_NO), LALT_T(KC_F4), LSFT_T(KC_F5), LGUI_T(KC_F6), KC_F11, KC_PMNS, RGUI_T(KC_4), RSFT_T(KC_5), RALT_T(KC_6), RCTL_T(KC_TRNS), KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F10, KC_PPLS, KC_1, KC_2, KC_3, KC_PSLS, KC_TRNS,
+		_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_0, KC_PDOT, _______
 	),
 	[4] = LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -98,12 +98,20 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // long press F13 as LT3, tap F13 as Ctrl-a
+    if (keycode == LT(3, KC_F13) && record->tap.count > 0) {
+        if (record->event.pressed) {
+            tap_code16(C(KC_A));
+        }
+        return false;
+    }
     switch (keycode){
+        // use F17 to toggle caps word mode
         case  KC_F17:
             if (record->event.pressed) {
                 caps_word_on();
             }
-            return false;   // override F17, otherwise caps word will be stopped.
+            return false;
     }
     return true;
 }
